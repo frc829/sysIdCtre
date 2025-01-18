@@ -4,11 +4,9 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -21,8 +19,7 @@ public class SysIdRoutineBot {
   private final Shooter m_shooter = new Shooter();
 
   // The driver's controller
-  CommandXboxController m_driverController =
-      new CommandXboxController(OIConstants.kDriverControllerPort);
+  CommandXboxController m_driverController = new CommandXboxController(0);
 
   /**
    * Use this method to define bindings between conditions and commands. These are useful for
@@ -46,26 +43,16 @@ public class SysIdRoutineBot {
 
     m_driverController
         .a()
-        .and(m_driverController.leftBumper())
-        .whileTrue(m_shooter.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+        .whileTrue(m_shooter.sysIdQuasistaticForward());
     m_driverController
         .b()
-        .and(m_driverController.leftBumper())
-        .whileTrue(m_shooter.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+        .whileTrue(m_shooter.sysIdQuasistaticReverse());
     m_driverController
         .x()
-        .and(m_driverController.leftBumper())
-        .whileTrue(m_shooter.sysIdDynamic(SysIdRoutine.Direction.kForward));
+        .whileTrue(m_shooter.sysIdDynamicForward());
     m_driverController
         .y()
-        .and(m_driverController.leftBumper())
-        .whileTrue(m_shooter.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+        .whileTrue(m_shooter.sysIdDynamicReverse());
   }
-
-  /**
-   * Use this to define the command that runs during autonomous.
-   *
-   * <p>Scheduled during {@link Robot#autonomousInit()}.
-   */
 
 }
