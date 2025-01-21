@@ -15,44 +15,48 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class SysIdRoutineBot {
-  // The robot's subsystems
-  private final Shooter m_shooter = new Shooter();
+    // The robot's subsystems
+    private final Shooter shooter = new Shooter();
 
-  // The driver's controller
-  CommandXboxController m_driverController = new CommandXboxController(0);
+    // The driver's controller
+    CommandXboxController driverController = new CommandXboxController(0);
 
-  /**
-   * Use this method to define bindings between conditions and commands. These are useful for
-   * automating robot behaviors based on button and sensor input.
-   *
-   * <p>Should be called in the robot class constructor.
-   *
-   * <p>Event binding methods are available on the {@link Trigger} class.
-   */
-  public void configureBindings() {
-    // Control the drive with split-stick arcade controls
-
-
-    // Bind full set of SysId routine tests to buttons; a complete routine should run each of these
-    // once.
-    // Using bumpers as a modifier and combining it with the buttons so that we can have both sets
-    // of bindings at once
+    /**
+     * Use this method to define bindings between conditions and commands. These are useful for
+     * automating robot behaviors based on button and sensor input.
+     *
+     * <p>Should be called in the robot class constructor.
+     *
+     * <p>Event binding methods are available on the {@link Trigger} class.
+     */
+    public void configureBindings() {
+        // Control the drive with split-stick arcade controls
 
 
-    // Control the shooter wheel with the left trigger
+        // Bind full set of SysId routine tests to buttons; a complete routine should run each of these
+        // once.
+        // Using bumpers as a modifier and combining it with the buttons so that we can have both sets
+        // of bindings at once
 
-    m_driverController
-        .a()
-        .whileTrue(m_shooter.sysIdQuasistaticForward());
-    m_driverController
-        .b()
-        .whileTrue(m_shooter.sysIdQuasistaticReverse());
-    m_driverController
-        .x()
-        .whileTrue(m_shooter.sysIdDynamicForward());
-    m_driverController
-        .y()
-        .whileTrue(m_shooter.sysIdDynamicReverse());
-  }
+
+        // Control the shooter wheel with the left trigger
+
+        driverController
+                .a()
+                .whileTrue(shooter.sysIdQuasistaticForward())
+                .onFalse(shooter.createStop());
+        driverController
+                .b()
+                .whileTrue(shooter.sysIdQuasistaticReverse())
+                .onFalse(shooter.createStop());
+        driverController
+                .x()
+                .whileTrue(shooter.sysIdDynamicForward())
+                .onFalse(shooter.createStop());
+        driverController
+                .y()
+                .whileTrue(shooter.sysIdDynamicReverse())
+                .onFalse(shooter.createStop());
+    }
 
 }
