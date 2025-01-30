@@ -16,7 +16,7 @@ import static edu.wpi.first.units.Units.*;
 
 public class Shooter extends SubsystemBase {
     // The motor on the shooter wheel .
-    private final SparkMax motor = new SparkMax(18, SparkLowLevel.MotorType.kBrushless);
+    private final SparkMax motor = new SparkMax(16, SparkLowLevel.MotorType.kBrushless);
 
 
     // The shooter wheel encoder
@@ -42,11 +42,11 @@ public class Shooter extends SubsystemBase {
                                 // Record a frame for the shooter motor.
                                 log.motor("motor")
                                         .voltage(
-                                                appliedVoltage.mut_replace(
-                                                        motor.getBusVoltage() * motor.getAppliedOutput(), Volts))
-                                        .angularPosition(angle.mut_replace(motor.getEncoder().getPosition(), Radians))
+                                                appliedVoltage.mut_setMagnitude(
+                                                        motor.getBusVoltage() * motor.getAppliedOutput()))
+                                        .angularPosition(angle.mut_setMagnitude(motor.getEncoder().getPosition()))
                                         .angularVelocity(
-                                                velocity.mut_replace(motor.getEncoder().getVelocity(), RadiansPerSecond));
+                                                velocity.mut_setMagnitude(motor.getEncoder().getVelocity()));
                             },
                             this
                     )
@@ -61,7 +61,7 @@ public class Shooter extends SubsystemBase {
                 .uvwMeasurementPeriod(16)
                 .uvwAverageDepth(2)
                 .positionConversionFactor(Math.PI * 2 / 12.0)
-                .velocityConversionFactor(Math.PI * 2 / 12.0 / 60.0);
+                .velocityConversionFactor(Math.PI * 2 / 60.0 / 12.0);
         SparkBaseConfig config = new SparkMaxConfig()
                 .apply(encoderConfig);
         config.idleMode(SparkBaseConfig.IdleMode.kCoast);
@@ -70,11 +70,11 @@ public class Shooter extends SubsystemBase {
 
     }
 
-    public void stop(){
+    public void stop() {
         motor.stopMotor();
     }
 
-    public Command createStop(){
+    public Command createStop() {
         return runOnce(this::stop);
     }
 
