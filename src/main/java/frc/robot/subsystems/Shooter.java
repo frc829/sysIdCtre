@@ -4,9 +4,6 @@ import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.configs.*;
 import com.ctre.phoenix6.controls.TorqueCurrentFOC;
-import edu.wpi.first.units.measure.MutAngle;
-import edu.wpi.first.units.measure.MutAngularVelocity;
-import edu.wpi.first.units.measure.MutVoltage;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -20,19 +17,10 @@ import static edu.wpi.first.units.Units.*;
 public class Shooter extends SubsystemBase {
     // The motor on the shooter wheel .
     private final TalonFX motor = new TalonFX(4);
-    private final VoltageOut voltageOut = new VoltageOut(0.0).withEnableFOC(false);
     private final VoltageOut voltageOutFOC = new VoltageOut(0.0).withEnableFOC(true);
     private final TorqueCurrentFOC torqueCurrentFOC = new TorqueCurrentFOC(0.0);
 
     // The shooter wheel encoder
-
-    // Mutable holder for unit-safe voltage values, persisted to avoid reallocation.
-    private final MutVoltage appliedVoltage = Volts.mutable(0);
-    // Mutable holder for unit-safe linear distance values, persisted to avoid reallocation.
-    private final MutAngle angle = Radians.mutable(0);
-    // Mutable holder for unit-safe linear velocity values, persisted to avoid reallocation.
-    private final MutAngularVelocity velocity = RadiansPerSecond.mutable(0);
-
     // Create a new SysId routine for characterizing the shooter.
     private final SysIdRoutine sysIdRoutine =
             new SysIdRoutine(
@@ -44,7 +32,7 @@ public class Shooter extends SubsystemBase {
                             state -> SignalLogger.writeString("state", state.toString())
                     ),
                     new SysIdRoutine.Mechanism(
-                            volts -> motor.setControl(voltageOut.withOutput(volts)),
+                            volts -> motor.setControl(voltageOutFOC.withOutput(volts)),
                             null,
                             this
                     )
