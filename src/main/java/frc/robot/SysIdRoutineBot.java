@@ -16,10 +16,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class SysIdRoutineBot {
   // The robot's subsystems
-  private final Shooter m_shooter = new Shooter();
+  private final Shooter shooter = new Shooter();
 
   // The driver's controller
-  CommandXboxController m_driverController = new CommandXboxController(0);
+  CommandXboxController driverController = new CommandXboxController(0);
 
   /**
    * Use this method to define bindings between conditions and commands. These are useful for
@@ -41,18 +41,18 @@ public class SysIdRoutineBot {
 
     // Control the shooter wheel with the left trigger
 
-    m_driverController
+    driverController
         .a()
-        .whileTrue(m_shooter.sysIdQuasistaticForward());
-    m_driverController
+        .whileTrue(shooter.sysIdQuasistaticForward());
+    driverController
         .b()
-        .whileTrue(m_shooter.sysIdQuasistaticReverse());
-    m_driverController
+        .whileTrue(shooter.sysIdQuasistaticReverse());
+    driverController
         .x()
-        .whileTrue(m_shooter.sysIdDynamicForward());
-    m_driverController
+        .whileTrue(shooter.sysIdDynamicForward());
+    driverController
         .y()
-        .whileTrue(m_shooter.sysIdDynamicReverse());
+        .whileTrue(shooter.sysIdDynamicReverse());
   }
 
 }
