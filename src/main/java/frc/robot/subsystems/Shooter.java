@@ -16,7 +16,7 @@ import static edu.wpi.first.units.Units.*;
 
 public class Shooter extends SubsystemBase {
     // The motor on the shooter wheel .
-    private final TalonFX motor = new TalonFX(4);
+    private final TalonFX motor = new TalonFX(14);
     private final VoltageOut voltageOutFOC = new VoltageOut(0.0).withEnableFOC(true);
     private final TorqueCurrentFOC torqueCurrentFOC = new TorqueCurrentFOC(0.0);
 
