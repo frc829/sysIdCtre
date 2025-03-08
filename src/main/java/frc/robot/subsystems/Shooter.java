@@ -65,8 +65,8 @@ public class Shooter extends SubsystemBase {
         public Shooter() {
                 double factor = 1.0 / (4.0 * 3.0 * 5.0 * 32.0 / 24.0);
                 EncoderConfig encoderConfig = new EncoderConfig()
-                                .quadratureMeasurementPeriod(16)
-                                .quadratureAverageDepth(2)
+                                .uvwMeasurementPeriod(16)
+                                .uvwAverageDepth(2)
                                 .positionConversionFactor(factor)
                                 .velocityConversionFactor(factor / 60.0);
                 SparkBaseConfig config = new SparkMaxConfig()
