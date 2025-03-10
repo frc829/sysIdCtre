@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.SignalLogger;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkLowLevel;
 import com.revrobotics.spark.SparkMax;
@@ -24,18 +26,17 @@ public class Shooter extends SubsystemBase {
         private final MutVoltage appliedVoltage = Volts.mutable(0);
         // Mutable holder for unit-safe linear distance values, persisted to avoid
         // reallocation.
-        private final MutDistance position = Meters.mutable(0);
+        private final MutAngle position = Rotations.mutable(0);
         // Mutable holder for unit-safe linear velocity values, persisted to avoid
         // reallocation.
-        private final MutLinearVelocity velocity = MetersPerSecond.mutable(0);
+        private final MutAngularVelocity velocity = RotationsPerSecond.mutable(0);
 
         // Create a new SysId routine for characterizing the shooter.
         private final SysIdRoutine sysIdRoutine = new SysIdRoutine(
                         new SysIdRoutine.Config(
                                         null, // Use default ramp rate (1 V/s)
                                         Volts.of(4), // Reduce dynamic voltage to 4 to prevent brownout
-                                        null, // Use default timeout (10 s)
-                                        state -> SignalLogger.writeString("wrist", state.toString())
+                                        null // Use default timeout (10 s)
 
                         ),
                         new SysIdRoutine.Mechanism(
@@ -50,9 +51,9 @@ public class Shooter extends SubsystemBase {
                                                                                 appliedVoltage.mut_setMagnitude(
                                                                                                 motor.getBusVoltage()
                                                                                                                 * motor.getAppliedOutput()))
-                                                                .linearPosition(position.mut_setMagnitude(
+                                                                .angularPosition(position.mut_setMagnitude(
                                                                                 motor.getEncoder().getPosition()))
-                                                                .linearVelocity(
+                                                                .angularVelocity(
                                                                                 velocity.mut_setMagnitude(motor
                                                                                                 .getEncoder()
                                                                                                 .getVelocity()));
