@@ -1,8 +1,6 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.SignalLogger;
-import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkLowLevel;
 import com.revrobotics.spark.SparkMax;
@@ -15,28 +13,17 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import static edu.wpi.first.units.Units.*;
 
 public class Shooter extends SubsystemBase {
-        // The motor on the shooter wheel .
         private final SparkMax motor = new SparkMax(17, SparkLowLevel.MotorType.kBrushless);
-        // private final SparkMax follower = new SparkMax(25,
-        // SparkLowLevel.MotorType.kBrushless);
 
-        // The shooter wheel encoder
-
-        // Mutable holder for unit-safe voltage values, persisted to avoid reallocation.
         private final MutVoltage appliedVoltage = Volts.mutable(0);
-        // Mutable holder for unit-safe linear distance values, persisted to avoid
-        // reallocation.
         private final MutAngle position = Rotations.mutable(0);
-        // Mutable holder for unit-safe linear velocity values, persisted to avoid
-        // reallocation.
         private final MutAngularVelocity velocity = RotationsPerSecond.mutable(0);
 
-        // Create a new SysId routine for characterizing the shooter.
         private final SysIdRoutine sysIdRoutine = new SysIdRoutine(
                         new SysIdRoutine.Config(
-                                        null, // Use default ramp rate (1 V/s)
-                                        Volts.of(4), // Reduce dynamic voltage to 4 to prevent brownout
-                                        null // Use default timeout (10 s)
+                                        Volts.per(Seconds).of(1.0),
+                                        Volts.of(4),
+                                        Seconds.of(10.0) // Use default timeout (10 s)
 
                         ),
                         new SysIdRoutine.Mechanism(
@@ -47,12 +34,12 @@ public class Shooter extends SubsystemBase {
                                         log -> {
                                                 // Record a frame for the shooter motor.
                                                 log.motor("motor")
-                                                                .voltage(
-                                                                                appliedVoltage.mut_setMagnitude(
-                                                                                                motor.getBusVoltage()
-                                                                                                                * motor.getAppliedOutput()))
-                                                                .angularPosition(position.mut_setMagnitude(
-                                                                                motor.getEncoder().getPosition()))
+                                                                .voltage(appliedVoltage
+                                                                                .mut_setMagnitude(motor.getBusVoltage()
+                                                                                                * motor.getAppliedOutput()))
+                                                                .angularPosition(position
+                                                                                .mut_setMagnitude(motor.getEncoder()
+                                                                                                .getPosition()))
                                                                 .angularVelocity(
                                                                                 velocity.mut_setMagnitude(motor
                                                                                                 .getEncoder()
@@ -74,7 +61,9 @@ public class Shooter extends SubsystemBase {
                                 .apply(encoderConfig);
                 config.idleMode(SparkBaseConfig.IdleMode.kBrake);
                 config.inverted(true);
-                motor.configure(config, SparkBase.ResetMode.kResetSafeParameters,
+                motor.configure(
+                                config,
+                                SparkBase.ResetMode.kResetSafeParameters,
                                 SparkBase.PersistMode.kPersistParameters);
         }
 
