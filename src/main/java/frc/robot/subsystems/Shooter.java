@@ -67,7 +67,7 @@ public class Shooter extends SubsystemBase {
         SparkBaseConfig followerConfig = new SparkFlexConfig()
                 .follow(15, true);
         config.idleMode(SparkBaseConfig.IdleMode.kBrake);
-        config.inverted(false);
+        config.inverted(true);
         followerConfig.idleMode(SparkBaseConfig.IdleMode.kBrake);
         motor.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
         follower.configure(followerConfig, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
