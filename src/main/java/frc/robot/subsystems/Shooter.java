@@ -136,8 +136,8 @@ public class Shooter extends SubsystemBase {
         TalonFXConfiguration config = new TalonFXConfiguration();
         motor.getConfigurator().apply(config);
         BaseStatusSignal.setUpdateFrequencyForAll(250,
-                motor.getPosition(),
-                motor.getVelocity(),
+                motor.getRotorPosition(),
+                motor.getRotorVelocity(),
                 motor.getMotorVoltage());
         motor.optimizeBusUtilization();
 

@@ -19,7 +19,7 @@ public class SysIdRoutineBot {
   private final Shooter shooter = new Shooter();
 
   // The driver's controller
-  CommandXboxController driverController = new CommandXboxController(3);
+  CommandXboxController driverController = new CommandXboxController(0);
 
   /**
    * Use this method to define bindings between conditions and commands. These are useful for
