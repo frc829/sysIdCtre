@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.configs.*;
-import com.ctre.phoenix6.controls.TorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.CANcoder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -54,9 +53,7 @@ public class Shooter extends SubsystemBase {
                 cancoder.getAbsolutePosition(),
                 cancoder.getVelocity());
         motor.optimizeBusUtilization();
-
         SignalLogger.start();
-
     }
 
 
