@@ -23,7 +23,7 @@ public class Shooter extends SubsystemBase {
                         new SysIdRoutine.Config(
                                         Volts.per(Seconds).of(1.0),
                                         Volts.of(4),
-                                        Seconds.of(10.0) // Use default timeout (10 s)
+                                        Seconds.of(3.0) // Use default timeout (10 s)
 
                         ),
                         new SysIdRoutine.Mechanism(
